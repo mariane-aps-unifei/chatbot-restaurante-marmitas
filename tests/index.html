@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Execução de Testes Automatizados - Sabor Caseiro</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7f6;
+      color: #333;
+      padding: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 { color: #c84b31; margin-bottom: 8px; }
+    p.sub { color: #666; margin-bottom: 24px; }
+    .suite-card {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .suite-header {
+      background: #2d4059;
+      color: #fff;
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .test-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .test-item {
+      padding: 10px 18px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13.5px;
+    }
+    .test-item:last-child { border-bottom: none; }
+    .status-badge {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .passou { background: #e8f5e9; color: #2e7d32; }
+    .falhou { background: #ffebee; color: #c62828; }
+    .resumo-geral {
+      background: #fff;
+      padding: 16px 20px;
+      border-radius: 8px;
+      border: 2px solid #2e7d32;
+      font-size: 16px;
+      font-weight: bold;
+      color: #2e7d32;
+      margin-top: 20px;
+    }
+    .btn-voltar {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 18px;
+      background: #c84b31;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Suíte de Testes Automatizados</h1>
+  <p class="sub">Validação dos 13 cenários obrigatórios: Carrinho, Entrega, Guardrails e Segurança contra Jailbreak.</p>
+
+  <div id="resultados-suites"></div>
+  <div id="resumo-geral" class="resumo-geral" style="display: none;"></div>
+
+  <a href="../index.html" class="btn-voltar">← Voltar para a Aplicação Principal</a>
+
+  <script type="module">
+    import { runCarrinhoTests } from './carrinho.test.js';
+    import { runEntregaTests } from './entrega.test.js';
+    import { runGuardrailsTests } from './guardrails.test.js';
+
+    const container = document.getElementById('resultados-suites');
+    const resumoEl = document.getElementById('resumo-geral');
+
+    const suites = [
+      runCarrinhoTests(),
+      runEntregaTests(),
+      runGuardrailsTests()
+    ];
+
+    let totalTestes = 0;
+    let totalPassou = 0;
+
+    suites.forEach(suite => {
+      const card = document.createElement('div');
+      card.className = 'suite-card';
+
+      const header = document.createElement('div');
+      header.className = 'suite-header';
+      header.innerHTML = `<span>${suite.nome}</span><span>${suite.resultados.length} testes</span>`;
+      card.appendChild(header);
+
+      const list = document.createElement('ul');
+      list.className = 'test-list';
+
+      suite.resultados.forEach(res => {
+        totalTestes++;
+        if (res.passou) totalPassou++;
+
+        const item = document.createElement('li');
+        item.className = 'test-item';
+        item.innerHTML = `
+          <span>${res.descricao}</span>
+          <span class="status-badge ${res.passou ? 'passou' : 'falhou'}">${res.passou ? '✔ PASSOU' : '✖ FALHOU'}</span>
+        `;
+        list.appendChild(item);
+      });
+
+      card.appendChild(list);
+      container.appendChild(card);
+    });
+
+    resumoEl.style.display = 'block';
+    resumoEl.textContent = `🎉 Concluído: ${totalPassou} de ${totalTestes} testes passaram com 100% de sucesso!`;
+  </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sabor Caseiro - Chatbot Inteligente de Marmitas (Agente LLM)</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+</head>
+<body>
+
+  <!-- CABEÇALHO PRINCIPAL -->
+  <header class="cabecalho-principal">
+    <div class="cabecalho-conteudo">
+      <div class="logo-container">
+        <div class="logo-icone" aria-hidden="true">🍲</div>
+        <div class="logo-texto">
+          <h1>Sabor Caseiro</h1>
+          <p>Marmitas Artesanais • Atendente Virtual com Agente LLM</p>
+        </div>
+      </div>
+
+      <div class="cabecalho-status">
+        <div class="status-pill status-carregando" id="llm-status-pill">
+          <span id="llm-status-texto">Inicializando Agente...</span>
+        </div>
+        <button class="btn-icone" id="btn-config-llm" title="Configurações do Modelo LLM">
+          ⚙️ <span>Modelo LLM</span>
+        </button>
+        <button class="btn-icone" id="btn-nova-conversa" title="Iniciar nova conversa">
+          🔄 <span>Novo Atendimento</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Barra de progresso para WebLLM WebGPU -->
+    <div class="llm-progresso" id="llm-progresso-container" style="display: none;">
+      <div class="llm-progresso-barra" id="llm-progresso-barra"></div>
+    </div>
+  </header>
+
+  <!-- CORPO PRINCIPAL COM AS 3 COLUNAS -->
+  <main class="conteiner-principal">
+
+    <!-- COLUNA 1: CARDÁPIO DO DIA -->
+    <aside class="painel painel-cardapio" aria-labelledby="titulo-cardapio">
+      <div class="painel-cabecalho">
+        <h2 id="titulo-cardapio">📋 Cardápio do Dia</h2>
+        <span class="badge-dia" id="badge-dia-atual">Carregando...</span>
+      </div>
+
+      <!-- Seletor acadêmico para simular outros dias da semana -->
+      <div class="seletor-simulacao">
+        <label for="seletor-dia-semana">Simular dia:</label>
+        <select id="seletor-dia-semana" title="Altere o dia para testar o cardápio rotativo">
+          <option value="1">Segunda-feira</option>
+          <option value="2">Terça-feira</option>
+          <option value="3">Quarta-feira</option>
+          <option value="4">Quinta-feira</option>
+          <option value="5">Sexta-feira</option>
+          <option value="6">Sábado</option>
+          <option value="0">Domingo (Fechado)</option>
+        </select>
+      </div>
+
+      <div class="cardapio-lista" id="lista-cardapio">
+        <!-- Renderizado dinamicamente via cardapio.js -->
+      </div>
+    </aside>
+
+    <!-- COLUNA 2: CHATBOT INTERATIVO -->
+    <section class="painel painel-chat" aria-labelledby="titulo-chat">
+      <div class="painel-cabecalho">
+        <h2 id="titulo-chat">💬 Atendimento Virtual</h2>
+        <span style="font-size: 11px; color: var(--cor-texto-suave);">Agente com Function Calling & Guardrails</span>
+      </div>
+
+      <!-- Sugestões de mensagens rápidas -->
+      <div class="chat-sugestoes" aria-label="Sugestões de mensagens">
+        <button class="chip-sugestao" data-prompt="Qual é o cardápio de hoje?">Qual é o cardápio de hoje?</button>
+        <button class="chip-sugestao" data-prompt="Quero duas marmitas de bife e um refrigerante">2x Bife + 1x Refrigerante</button>
+        <button class="chip-sugestao" data-prompt="Quero a primeira marmita sem cebola e bem passada">Sem cebola e bem passada</button>
+        <button class="chip-sugestao" data-prompt="Quero entrega no Bairro A">Entrega no Bairro A</button>
+        <button class="chip-sugestao" data-prompt="Mostre meu pedido">Ver carrinho</button>
+      </div>
+
+      <!-- Histórico de mensagens -->
+      <div class="chat-mensagens" id="chat-mensagens" role="log" aria-live="polite">
+        <!-- Mensagens renderizadas dinamicamente via chatbot.js -->
+      </div>
+
+      <!-- Indicador visual de digitando -->
+      <div class="digitando-indicador" id="digitando-indicador">
+        <div class="ponto-digitando"></div>
+        <div class="ponto-digitando"></div>
+        <div class="ponto-digitando"></div>
+      </div>
+
+      <!-- Entrada de texto do usuário -->
+      <div class="chat-rodape">
+        <form class="chat-form" id="chat-form">
+          <input 
+            type="text" 
+            class="chat-input" 
+            id="chat-input" 
+            placeholder="Digite sua mensagem ou pedido em linguagem natural..." 
+            autocomplete="off"
+            required
+          >
+          <button type="submit" class="btn-enviar" id="chat-enviar" title="Enviar mensagem">➤</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- COLUNA 3: CARRINHO E TOTALIZADOR -->
+    <aside class="painel painel-carrinho" aria-labelledby="titulo-carrinho">
+      <div class="painel-cabecalho">
+        <h2 id="titulo-carrinho">🛒 Carrinho de Compras <span class="badge-contador" id="carrinho-contador">0</span></h2>
+        <button class="btn-carrinho-acao" id="btn-limpar-carrinho" title="Limpar carrinho">Esvaziar</button>
+      </div>
+
+      <div class="carrinho-lista" id="carrinho-itens">
+        <!-- Renderizado dinamicamente via carrinho.js -->
+      </div>
+
+      <!-- Resumo financeiro calculado estritamente por JavaScript -->
+      <div class="carrinho-resumo">
+        <div class="resumo-linha">
+          <span>Subtotal dos itens:</span>
+          <strong id="carrinho-subtotal">R$ 0,00</strong>
+        </div>
+        <div class="resumo-linha">
+          <span>Taxa de entrega:</span>
+          <strong id="carrinho-taxa-entrega">A calcular</strong>
+        </div>
+        <div class="resumo-linha total-destaque">
+          <span>Valor Total:</span>
+          <strong id="carrinho-total">R$ 0,00</strong>
+        </div>
+        <div class="carrinho-botoes">
+          <button class="btn-carrinho-acao chip-sugestao" data-prompt="Quero entrega no Centro" style="text-align: center;">Calcular Entrega</button>
+          <button class="btn-carrinho-acao chip-sugestao" data-prompt="Confirmo meu pedido" style="background: #2e7d32; color: #fff; text-align: center;">Confirmar Compra</button>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- MODAL DE CONFIGURAÇÃO DE MODELO LLM -->
+  <div class="modal-overlay" id="modal-config-llm" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal-card">
+      <div class="modal-cabecalho">
+        <h3 id="modal-titulo">⚙️ Configurações do Agente LLM</h3>
+        <button class="btn-fechar" id="btn-fechar-modal">&times;</button>
+      </div>
+      <form id="form-config-llm">
+        <div class="modal-corpo">
+          <div class="form-grupo">
+            <label for="select-provedor-llm">Modo de Execução da LLM:</label>
+            <select id="select-provedor-llm">
+              <option value="local_rules">NLU Semântico Local (Puro Client-Side - Compatibilidade Instantânea)</option>
+              <option value="webllm">WebLLM Local no Navegador (Llama-3.2-1B via WebGPU)</option>
+              <option value="gemini">API Externa: Google Gemini (Client-Side com CORS)</option>
+              <option value="groq">API Externa: Groq / Llama 3.1 (Client-Side com CORS)</option>
+              <option value="openai">API Externa: OpenAI gpt-4o-mini (Client-Side com CORS)</option>
+            </select>
+          </div>
+
+          <div class="form-grupo" id="grupo-api-key">
+            <label for="input-api-key">Chave de API (opcional, apenas para APIs externas):</label>
+            <input type="password" id="input-api-key" placeholder="Insira sua chave de API (nunca salva no código)">
+          </div>
+
+          <div class="aviso-academico">
+            <strong>Nota Acadêmica:</strong> Toda a inferência e execução ocorrem diretamente no seu navegador. Nenhuma chave ou informação sensível é gravada em servidores ou exposta no repositório.
+          </div>
+        </div>
+        <div class="modal-rodape">
+          <button type="button" class="btn-secundario" id="btn-cancelar-modal" onclick="document.getElementById('modal-config-llm').classList.remove('ativo')">Fechar</button>
+          <button type="submit" class="btn-primario">Salvar e Aplicar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT PRINCIPAL TIPO MÓDULO -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

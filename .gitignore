@@ -1,0 +1,20 @@
+# Dependências e logs de sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# IDEs e Editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Ambientes temporários e chaves
+.env
+.env.local
+.env.*.local
+*.pem
+*.key

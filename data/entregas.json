@@ -1,0 +1,48 @@
+{
+  "restaurante": {
+    "nome": "Sabor Caseiro",
+    "endereco": "Rua das Marmitas, 100 - Centro",
+    "tempoMedioMinutos": 40
+  },
+  "opcoesRetirada": {
+    "id": "retirada",
+    "nome": "Retirada no Restaurante",
+    "taxaCentavos": 0,
+    "descricao": "Retire seu pedido quentinho no balcão sem taxa de entrega."
+  },
+  "regioes": [
+    {
+      "id": "centro",
+      "nome": "Centro",
+      "taxaCentavos": 500,
+      "tempoMinutos": 30
+    },
+    {
+      "id": "bairro_a",
+      "nome": "Bairro A",
+      "sinonimos": ["bairro a", "bairroa", "zona norte", "jardins"],
+      "taxaCentavos": 700,
+      "tempoMinutos": 40
+    },
+    {
+      "id": "bairro_b",
+      "nome": "Bairro B",
+      "sinonimos": ["bairro b", "bairrob", "zona sul", "vila nova"],
+      "taxaCentavos": 1000,
+      "tempoMinutos": 50
+    },
+    {
+      "id": "bairro_c",
+      "nome": "Bairro C",
+      "sinonimos": ["bairro c", "bairroc", "industrial", "aeroporto"],
+      "taxaCentavos": 1200,
+      "tempoMinutos": 55
+    }
+  ],
+  "formasPagamento": [
+    { "id": "pix", "nome": "Pix" },
+    { "id": "cartao_credito", "nome": "Cartão de Crédito" },
+    { "id": "cartao_debito", "nome": "Cartão de Débito" },
+    { "id": "dinheiro", "nome": "Dinheiro" }
+  ]
+}

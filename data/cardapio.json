@@ -1,0 +1,184 @@
+{
+  "diasSemana": {
+    "0": "Domingo",
+    "1": "Segunda-feira",
+    "2": "Terça-feira",
+    "3": "Quarta-feira",
+    "4": "Quinta-feira",
+    "5": "Sexta-feira",
+    "6": "Sábado"
+  },
+  "funcionamento": {
+    "diasAbertos": [1, 2, 3, 4, 5, 6],
+    "fechadoTexto": "Aos domingos o restaurante não abre para atendimento.",
+    "horario": "11:00 às 15:00"
+  },
+  "categorias": [
+    { "id": "marmitas", "nome": "Marmitas do Dia" },
+    { "id": "bebidas", "nome": "Bebidas" },
+    { "id": "sobremesas", "nome": "Sobremesas" }
+  ],
+  "produtos": [
+    {
+      "id": "marmita_bife",
+      "nome": "Marmita de Bife Acebolado",
+      "descricao": "Arroz branco, feijão carioca, bife bovino acebolado grelhado, farofa da casa e salada.",
+      "categoria": "marmitas",
+      "precoCentavos": 2500,
+      "diasDisponiveis": [1, 2, 3, 4, 5, 6],
+      "ingredientes": ["arroz", "feijão", "bife bovino", "cebola", "alho", "farofa", "salada", "pimenta"],
+      "opcoesPersonalizacao": {
+        "permitePonto": true,
+        "pontosPermitidos": ["malpassado", "ao ponto", "bem passado"],
+        "pontoPadrao": "ao ponto",
+        "removiveis": ["cebola", "alho", "pimenta", "farofa", "salada", "feijão"],
+        "adicionais": []
+      },
+      "ativo": true
+    },
+    {
+      "id": "marmita_frango",
+      "nome": "Marmita de Frango Grelhado",
+      "descricao": "Arroz branco, feijão carioca, filé de peito de frango grelhado com ervas finas e legumes no vapor.",
+      "categoria": "marmitas",
+      "precoCentavos": 2200,
+      "diasDisponiveis": [1, 2, 3, 4, 5, 6],
+      "ingredientes": ["arroz", "feijão", "frango", "legumes", "alho", "ervas finas", "sal"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": ["alho", "feijão", "legumes", "ervas finas"],
+        "adicionais": []
+      },
+      "ativo": true
+    },
+    {
+      "id": "marmita_carne_panela",
+      "nome": "Marmita de Carne de Panela",
+      "descricao": "Arroz branco, feijão preto, carne bovina cozida com batatas e cenouras em molho encorpado.",
+      "categoria": "marmitas",
+      "precoCentavos": 2700,
+      "diasDisponiveis": [2, 4, 6],
+      "ingredientes": ["arroz", "feijão preto", "carne de panela", "batata", "cenoura", "cebola", "alho", "cheiro verde"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": ["cebola", "alho", "cheiro verde", "batata", "cenoura"],
+        "adicionais": []
+      },
+      "ativo": true
+    },
+    {
+      "id": "marmita_peixe",
+      "nome": "Marmita de Peixe Grelhado",
+      "descricao": "Arroz branco, pirão de peixe saboroso, filé de tilápia grelhado ao molho de limão e ervas.",
+      "categoria": "marmitas",
+      "precoCentavos": 2900,
+      "diasDisponiveis": [3, 5],
+      "ingredientes": ["arroz", "pirão", "tilápia", "limão", "alho", "ervas", "coentro"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": ["alho", "coentro", "pirão", "limão"],
+        "adicionais": []
+      },
+      "ativo": true
+    },
+    {
+      "id": "marmita_vegetariana",
+      "nome": "Marmita Vegetariana",
+      "descricao": "Arroz integral, feijão carioca, mix de legumes assados, hambúrguer de grão-de-bico artesanal e purê de abóbora.",
+      "categoria": "marmitas",
+      "precoCentavos": 2300,
+      "diasDisponiveis": [1, 2, 3, 4, 5, 6],
+      "ingredientes": ["arroz integral", "feijão", "hambúrguer de grão-de-bico", "legumes assados", "purê de abóbora", "alho", "cebola"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": ["cebola", "alho", "purê de abóbora", "feijão"],
+        "adicionais": []
+      },
+      "ativo": true
+    },
+    {
+      "id": "marmita_feijoada",
+      "nome": "Marmita de Feijoada Completa",
+      "descricao": "Arroz branco, feijoada tradicional com carnes nobres, couve refogada no alho, farofa e fatias de laranja.",
+      "categoria": "marmitas",
+      "precoCentavos": 3000,
+      "diasDisponiveis": [3, 6],
+      "ingredientes": ["arroz", "feijão preto", "carnes de porco", "bacon", "couve", "alho", "laranja", "farofa"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": ["alho", "couve", "farofa", "laranja", "bacon"],
+        "adicionais": []
+      },
+      "ativo": true
+    },
+    {
+      "id": "refri_lata",
+      "nome": "Refrigerante Lata 350ml",
+      "descricao": "Coca-Cola, Guaraná Antarctica ou Fanta Laranja (gelada).",
+      "categoria": "bebidas",
+      "precoCentavos": 500,
+      "diasDisponiveis": [1, 2, 3, 4, 5, 6],
+      "ingredientes": ["refrigerante"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": [],
+        "sabores": ["Coca-Cola", "Guaraná", "Fanta Laranja", "Coca Zero"]
+      },
+      "ativo": true
+    },
+    {
+      "id": "suco_natural",
+      "nome": "Suco Natural 500ml",
+      "descricao": "Suco da fruta feito na hora: Laranja, Maracujá ou Abacaxi com Hortelã.",
+      "categoria": "bebidas",
+      "precoCentavos": 700,
+      "diasDisponiveis": [1, 2, 3, 4, 5, 6],
+      "ingredientes": ["fruta natural", "água", "açúcar"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": ["açúcar"],
+        "sabores": ["Laranja", "Maracujá", "Abacaxi com Hortelã"]
+      },
+      "ativo": true
+    },
+    {
+      "id": "agua_mineral",
+      "nome": "Água Mineral 500ml",
+      "descricao": "Água mineral pura e refrescante, com ou sem gás.",
+      "categoria": "bebidas",
+      "precoCentavos": 300,
+      "diasDisponiveis": [1, 2, 3, 4, 5, 6],
+      "ingredientes": ["água mineral"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": [],
+        "sabores": ["Sem gás", "Com gás"]
+      },
+      "ativo": true
+    },
+    {
+      "id": "pudim",
+      "nome": "Pudim de Leite Condensado",
+      "descricao": "Fatia generosa de pudim tradicional com calda de caramelo caseira.",
+      "categoria": "sobremesas",
+      "precoCentavos": 800,
+      "diasDisponiveis": [1, 2, 3, 4, 5, 6],
+      "ingredientes": ["leite condensado", "leite", "ovos", "calda de açúcar"],
+      "opcoesPersonalizacao": {
+        "permitePonto": false,
+        "pontosPermitidos": [],
+        "removiveis": [],
+        "adicionais": []
+      },
+      "ativo": true
+    }
+  ]
+}
